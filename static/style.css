@@ -1,0 +1,144 @@
+:root {
+    --color: #0f0;
+    --color_bkg: #1a1a1a;
+    --color_radar: #0f0;
+    --color_error: #ff009d;
+    --color_player: #006eff;
+    --color_e1: #ff0000;
+    --color_e2: #ff5e00;
+    --color_e3: #ff006a;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    background: var(--color_error);
+}
+
+#game-container { 
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    background: var(--color_bkg); 
+    color: var(--color_radar); 
+    font-family: monospace; 
+    padding: 20px;
+}
+#main-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+#radar-container { 
+    position: relative; 
+    width: 400px; 
+    height: 400px; 
+    /* border: 2px solid var(--color); */
+    padding: 10px;
+}
+
+#radar-container > svg {
+    height: 100%;
+    width: 100%;
+}
+
+#radar-container > svg > .player {
+    fill: var(--color_player);
+}
+
+#radar-container > svg > .radar-line {
+    stroke: var(--color_radar);
+    stroke-width: 0.2%;
+}
+
+#radar-container > svg > .main-circle {
+    stroke-width: 0.5%;
+}
+
+.enemy-token { 
+    position: absolute; 
+    width: 12px; 
+    height: 12px; 
+    border-radius: 50%; 
+    transform: translate(-50%, -50%); 
+}
+
+.e1 {
+    fill: var(--color_e1);
+}
+
+.e2 {
+    fill: var(--color_e2);
+}
+
+.e3 {
+    fill: var(--color_e3);
+}
+
+
+#enemy-data {
+    flex: 1;
+    /* border: 2px solid var(--color_error); */
+}
+
+#time-track {
+    margin: 10px;
+}
+
+#time-slots { 
+    display: flex; 
+    gap: 5px; 
+    margin-top: 10px; 
+}
+
+.time-slot { 
+    width: 40px; 
+    height: 80px; 
+    display: flex; 
+    flex-direction: column;
+}
+
+.slot-label {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    border: 2px solid var(--color);
+    flex: 1;
+}
+
+.slot {
+    border: 1px solid var(--color);
+    flex: 1;
+}
+
+.active-slot > .slot-label { 
+    background: #050; 
+    border-width: 2px; 
+}
+
+#controls {
+    display: grid;
+    grid-template-areas:
+        "action action  action"
+        "shl    stance  shr"
+        "shl    torso   shr"
+        ".      torso   ."
+        "arl    .       arr"
+        "arl    legs    arr"
+        ".      legs    .";
+
+    max-width: 400px;
+    gap: 2px;
+}
+
+#controls > div {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color);
+    min-height: 40px;
+}
