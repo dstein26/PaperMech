@@ -6,8 +6,11 @@
     --color-bkg: #0b1b0b;
     --color-bkg-lite: #1a4a1a;
     --color-console-green: #00ff00;
+
+    --blue:         #3ab5ff;
+    --amber:        #f5a623;
     
-    --color-enemy: #ff8800;
+    --color-enemy: #ff5900;
 }
 
 
@@ -17,6 +20,7 @@
     box-sizing: border-box;
 
     font-family: 'Jura', 'VT323', "Lucida Console", "Courier New", monospace;
+    font-variant-caps: small-caps;
     color: var(--color-console-green);
 }
 
@@ -56,6 +60,19 @@ button:hover {
     display: flex;
     flex-direction: column;
     margin-left: 10px;
+}
+
+.armor {
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    background: var(--color-bkg);
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.attribute {
+    color: var(--amber);
+    font-style: italic;
 }
 
 /*----- Radar Icon -----*/
@@ -138,12 +155,12 @@ button:hover {
 
 }
 
-.enemy > .enemy-header .armor {
+/* .enemy > .enemy-header .armor {
     border: 1px solid var(--color-console-green);
     background: var(--color-bkg);
     border-radius: 50%;
     padding: 2px;
-}
+} */
 
 .enemy > .controls {
     display: grid;
@@ -161,10 +178,10 @@ button:hover {
     border-right-style: none;
 }
 
-.enemy .attack > .attribute {
-    color: var(--color-enemy);
+/* .enemy .attack > .attribute {
+    color: var(--amber);
     font-style: italic;
-}
+} */
 
 .enemy .attack > .active {
     aspect-ratio: 1;
@@ -190,6 +207,36 @@ button:hover {
 
     max-width: 400px;
     gap: 2px;
+}
+
+.limb > .weapon-header{
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    background: var(--color-bkg-lite);
+}
+
+.limb .weapon-info {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap: 5px
+}
+
+.limb .attacks > .attack {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto;
+    gap: 5px;
+    border: 1px solid var(--color-bkg-lite);
+    border-top-style: none;
+    border-right-style: none;
+}
+
+.limb .attack > .active {
+    aspect-ratio: 1;
+    border: 1px solid var(--color-console-green);
+}
+
+.limb .attack:hover > .active {
+    background: var(--color-bkg-lite);
 }
 
 /*----- Templates -----*/

@@ -64,55 +64,83 @@
                     </div>
                 </div>
             </div>
-
-            <div id="controls-info-side">
-                <div id="limb-template">
-                    <div class="limb">
-                        <div class="mount">Left Shoulder Mount</div>
-                        <div class="weapon-header">
-                            <div class="name">WING SHIELD</div>
-                            <div class="attribute">REFLEX</div>
-                            <div class="armor">4</div>
-                        </div>
-                        <div class="weapon-info">
-                            <div class="attacks">
-                                <div class="attack">
-                                    <div class="name">DEFEND</div>
-                                    <div class="power">P0</div>
-                                    <div class="time">T1</div>
-                                    <div class="pips">
-                                        <div class="pip"></div>
-                                        <div class="pip"></div>
-                                    </div>
-                                </div>
-                                <div class="attack">
-                                    <div class="name">DEFEND</div>
-                                    <div class="power">P0</div>
-                                    <div class="time">T1</div>
-                                    <div class="pips">
-                                        <div class="pip"></div>
-                                        <div class="pip"></div>
-                                    </div>
-                                </div>
-                                <div class="attack">
-                                    <div class="name">DEFEND</div>
-                                    <div class="power">P0</div>
-                                    <div class="time">T1</div>
-                                    <div class="pips">
-                                        <div class="pip"></div>
-                                        <div class="pip"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="info">
-                                <div class="weight">1</div>
-                                <div class="arc">1, 2, 3, 4</div>
-                                <div class="range">-</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="controls-container">
+					<div id="action" class="control-group" style="grid-area: action;">
+						<h3>Action</h3>
+						<button onclick="advanceTime()">End Action / Tick</button>
+					</div>
+					<div id="stance" class="control-group" style="grid-area: stance;">
+						<h3>Stance</h3>
+					</div>
+					<div id="shoulder-right" class="control-group" style="grid-area: shr;">
+						<h3>Shoulder Right</h3>
+					</div>
+					<div id="shoulder-left" class="control-group" style="grid-area: shl;">
+						<div class="limb">
+							<div class="mount">Left Shoulder Mount</div>
+							<div class="weapon-header">
+								<div class="name">WING SHIELD</div>
+								<div class="attribute">REFLEX</div>
+								<div class="armor">4</div>
+							</div>
+							<div class="weapon-info">
+								<div class="attacks">
+									<div class="attack">
+										<div class="active"></div>
+										<div class="name">DEFEND</div>
+										<div class="power">P0</div>
+										<div class="time">T1</div>
+										<div class="pips">
+											<div class="pip"></div>
+											<div class="pip"></div>
+										</div>
+									</div>
+									<div class="attack">
+										<div class="active"></div>
+										<div class="name">DEFEND</div>
+										<div class="power">P0</div>
+										<div class="time">T1</div>
+										<div class="pips">
+											<div class="pip"></div>
+											<div class="pip"></div>
+										</div>
+									</div>
+									<div class="attack">
+										<div class="active"></div>
+										<div class="name">DEFEND</div>
+										<div class="power">P0</div>
+										<div class="time">T1</div>
+										<div class="pips">
+											<div class="pip"></div>
+											<div class="pip"></div>
+										</div>
+									</div>
+								</div>
+								<div class="info">
+									<div class="weight">1</div>
+									<div class="arc">1, 2, 3, 4</div>
+									<div class="range">-</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="arm-right" class="control-group" style="grid-area: arr;">
+						<h3>Arm Right</h3>
+					</div>
+					<div id="arm-left" class="control-group" style="grid-area: arl;">
+						<h3>Arm Left</h3>
+					</div>
+					<div id="torso" class="control-group" style="grid-area: torso;">
+						<h3>Torso</h3>
+					</div>
+					<div id="legs" class="control-group" style="grid-area: legs;">
+						<h3>Legs</h3>
+						<button onclick="movePlayer('forward')">Walk Forward</button>
+						<button onclick="movePlayer('backward')">Walk Backward</button>
+						<button onclick="movePlayer('turn-cw')">Turn CW</button>
+						<button onclick="movePlayer('turn-ccw')">Turn CCW</button>
+					</div>
+				</div>
         </main>
 
 		<footer>
