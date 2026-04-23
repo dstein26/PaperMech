@@ -1,19 +1,20 @@
 :root {
     --color: #0f0;
-    --color_bkg: #1a1a1a;
+    --color-dim: rgb(17, 77, 17);
+    --color_bkg: #0b0f0b;
+    --color_deep: #060806;
     --color_radar: #0f0;
     --color_error: #ff009d;
     --color_player: #006eff;
     --color_e1: #ff0000;
     --color_e2: #ff5e00;
     --color_e3: #ff006a;
+    --text-bright: #2e4e2e;
+    --text:#c8c8c8;
+    --text-dim:#5a7a5a;
 }
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
     height: 100%;
@@ -141,4 +142,20 @@ html, body {
     flex-direction: column;
     border: 1px solid var(--color);
     min-height: 40px;
+}
+
+#controls button {
+    color: var(--text);
+    background: var(--bg_deep);
+    border: 1px solid var(--color);
+    font-size: 18px;
+    padding: 8px 20px;
+    text-align: center;
+    box-shadow: 0 0 12px var(--color) inset;
+}
+
+#controls button:hover {
+    background: var(--color-dim);
+    box-shadow: 0 0 20px var(--color) inset,
+                0 0 12px var(--color);
 }
