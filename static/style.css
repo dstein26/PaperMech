@@ -1,161 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Jura:wght@400;600;700&display=swap');
+
 :root {
-    --color: #0f0;
-    --color-dim: rgb(17, 77, 17);
-    --color_bkg: #0b0f0b;
-    --color_deep: #060806;
-    --color_radar: #0f0;
-    --color_error: #ff009d;
-    --color_player: #006eff;
-    --color_e1: #ff0000;
-    --color_e2: #ff5e00;
-    --color_e3: #ff006a;
-    --text-bright: #2e4e2e;
-    --text:#c8c8c8;
-    --text-dim:#5a7a5a;
+    --color-error: #ff009d;
+
+    --color-bkg: #0b1b0b;
+    --color-bkg-lite: #1a4a1a;
+    --color-console-green: #00ff00;
+    
+    --color-enemy: #ff8800;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+*, ::after, ::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: 'Jura', 'VT323', "Lucida Console", "Courier New", monospace;
+    color: var(--color-console-green);
+}
 
 html, body {
     height: 100%;
-    background: var(--color_error);
+    background: var(--color-error);
 }
 
-#game-container { 
-    display: flex;
-    flex-direction: column;
-    gap: 20px; 
-    background: var(--color_bkg); 
-    color: var(--color_radar); 
-    font-family: monospace; 
+header {
+    background: var(--color-bkg-lite);
+    color: var(--color-console-green);
+    text-align: center;
     padding: 20px;
 }
-#main-container {
-    width: 100%;
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    background: var(--color-bkg);
+}
+
+/*----- General -----*/
+button {
+    background: black;
+    border: 1px solid var(--color-bkg-lite);
+    box-shadow: inset 0px 0px 5px 0px var(--color-console-green);
+}
+
+button:hover {
+    box-shadow: inset 0px 0px 5px 2px var(--color-console-green);
+    transform: translate(-1px, -1px);
+}
+
+
+/*----- Game Screen -----*/
+#info {
     display: flex;
-    flex-direction: row;
-}
-#radar-container { 
-    position: relative; 
-    width: 400px; 
-    height: 400px; 
-    /* border: 2px solid var(--color); */
-    padding: 10px;
+    flex-direction: column;
+    margin-left: 10px;
 }
 
-#radar-container > svg {
-    height: 100%;
-    width: 100%;
+/*----- Radar Icon -----*/
+#radar {
+    text-align: center;
+    margin: 0 0 25px 0; 
 }
 
-#radar-container > svg > .player {
-    fill: var(--color_player);
-}
-
-#radar-container > svg > .radar-line {
-    stroke: var(--color_radar);
-    stroke-width: 0.2%;
-}
-
-#radar-container > svg > .main-circle {
-    stroke-width: 0.5%;
-}
-
-.enemy-token { 
-    position: absolute; 
-    width: 12px; 
-    height: 12px; 
-    border-radius: 50%; 
-    transform: translate(-50%, -50%); 
-}
-
-.e1 {
-    fill: var(--color_e1);
-}
-
-.e2 {
-    fill: var(--color_e2);
-}
-
-.e3 {
-    fill: var(--color_e3);
-}
-
-
-#enemy-data {
-    flex: 1;
-    /* border: 2px solid var(--color_error); */
-}
-
-#time-track {
+#radar-svg-container {
+    width: calc(100% - 20px);
+    aspect-ratio: 1;
     margin: 10px;
 }
 
-#time-slots { 
-    display: flex; 
-    gap: 5px; 
-    margin-top: 10px; 
+#radar svg {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
-.time-slot { 
-    width: 40px; 
-    height: 80px; 
-    display: flex; 
-    flex-direction: column;
+/*----- Time Track -----*/
+#time-track {
+    width: 100%;
 }
 
-.slot-label {
+#time-slots {
     display: flex;
-    align-items: center; 
-    justify-content: center;
-    border: 2px solid var(--color);
-    flex: 1;
+    flex-direction: row;
+    width: 100%;
 }
 
 .slot {
-    border: 1px solid var(--color);
-    flex: 1;
-}
-
-.active-slot > .slot-label { 
-    background: #050; 
-    border-width: 2px; 
-}
-
-#controls {
     display: grid;
-    grid-template-areas:
-        "action action  action"
-        "shl    stance  shr"
-        "shl    torso   shr"
-        ".      torso   ."
-        "arl    .       arr"
-        "arl    legs    arr"
-        ".      legs    .";
+    grid-template-rows: 1fr 1fr;
+    aspect-ratio: 1/2;
+    width: 12.5%;
+}
 
-    max-width: 400px;
+.slot > * {
+    border: 1px solid var(--color-console-green);
+}
+
+.active-slot > .time-label {
+    background: var(--color-bkg-lite);
+}
+
+.time-label {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    /* width:100%;
+    height:100%; */
+}
+
+/*----- Enemy Info -----*/
+.enemy {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0 10px 0;
+}
+
+.enemy > .enemy-header {
+    display: grid;
+    background: var(--color-bkg-lite);
+    grid-template-columns: auto 1fr auto;
+}
+
+.enemy > .enemy-header > * {
+    text-align: center;
+    padding: 5px;
+}
+
+.enemy > .enemy-header .icon {
+    color: black;
+    padding: 2px;
+    aspect-ratio: 1;
+    background: var(--color-enemy);
+    border-radius: 50%;
+    border: 1px solid var(--color-enemy);
+
+}
+
+.enemy > .enemy-header .armor {
+    border: 1px solid var(--color-console-green);
+    background: var(--color-bkg);
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.enemy > .controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 2px;
 }
 
-#controls > div {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--color);
-    min-height: 40px;
+.enemy .attack {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr auto auto auto auto;
+    gap: 5px;
+    padding: 5px 0px 5px 0px;
+    border: 1px solid var(--color-bkg-lite);
+    border-top-style: none;
+    border-right-style: none;
 }
 
-#controls button {
-    color: var(--text);
-    background: var(--bg_deep);
-    border: 1px solid var(--color);
-    font-size: 18px;
-    padding: 8px 20px;
-    text-align: center;
-    box-shadow: 0 0 12px var(--color) inset;
+.enemy .attack > .attribute {
+    color: var(--color-enemy);
+    font-style: italic;
 }
 
-#controls button:hover {
-    background: var(--color-dim);
-    box-shadow: 0 0 20px var(--color) inset,
-                0 0 12px var(--color);
+.enemy .attack > .active {
+    aspect-ratio: 1;
+    border: 1px solid var(--color-console-green);
+}
+
+.enemy .attack:hover > .active {
+    background: var(--color-bkg-lite);
+}
+
+
+/*----- Controls Screen ------*/
+
+
+/*----- Templates -----*/
+#templates {
+    flex: 1;
+    background: var(--color-bkg);
+}
+
+#templates-info-side {
+    height: 100%;
+}
+
+
+
+
+/*----- Other -----*/
+#errors {
+    background: black;
+}
+
+.test-border {
+    border: 1px solid var(--color-error);
 }

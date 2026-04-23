@@ -1,92 +1,183 @@
 const gameState = {
-    player: { 
-        time: 0, 
-        zone: 1, 
-        range: 0, 
-        stance: 'stand', 
-        reflex: true 
+    player: {
+        time: 0,
+        stance: 'stand'
     },
     enemies: [
-        { id: 'H', zone: 1, range: 3, time: 2, color: 'red' },
-        { id: 'F', zone: 6, range: 2, time: 5, color: 'orange' }
-    ],
-    history: []
-};
 
-function advanceTime() {
-    // Find how many steps to the next activation
-    const minTime = Math.min(gameState.player.time, ...gameState.enemies.map(e => e.time));
-    
-    // Move all cubes down
-    gameState.player.time -= minTime;
-    gameState.enemies.forEach(e => e.time -= minTime);
+    ]
+}
 
-    // Check for collisions
-    if (gameState.player.time === 0) {
-        if (gameState.player.reflex) {
-            log("Player activates first via Reflex!");
-        } else if (gameState.enemies.some(e => e.time === 0)) {
-            log("Enemies activate before Player.");
+// ----- Load Divs ----- //
+const timeDiv = document.getElementById("time-slots");
+const errDiv = document.getElementById("errors");
+const radarDiv = document.getElementById("radar-svg-container");
+const enemiesDiv = document.getElementById("enemy-list");
+let enemiesRadar;
+
+// ----- File URLS ----- //
+const radarURL = "static/radar.svg";
+const templatesURL = "static/templates.html"
+const enemiesJSON = "static/enemies.json"
+
+
+async function loadRadarGraphic() {
+    let passed = true;
+
+    try {
+        const response = await fetch(radarURL);
+
+        if (!response.ok) {
+            throw new Error(`HTTP Error! Status: ${response.status}`);
         }
+
+        const svgData = await response.text();
+
+        radarDiv.innerHTML = svgData;
+
+        enemiesRadar = document.querySelector("#enemies");
     }
-    render();
+    catch (error) {
+        errDiv.innerHTML += `<br><strong>Error:</strong> Failed to load content <br>
+        Details: ${error.message}`;
+        passed = false;
+    }
+
+    return passed;
 }
 
-function movePlayer(type) {
-    gameState.enemies.forEach(enemy => {
-        if (type === 'forward') {
-            console.log("Moving Forward");
-            // Zone 3 & 4 move toward center
-            if ([3, 4].includes(enemy.zone) && enemy.range > 0) enemy.range--;
-            // Zone 7 & 8 move further away or stay
-            else if ([7, 8].includes(enemy.zone) && enemy.range < 3) enemy.range++;
+async function loadTemplates() {
+    try {
+        const response = await fetch(templatesURL);
+
+        if(!response.ok) {
+            throw new Error(`HTTP Error! Status: ${response.status}`);
         }
-        else if (type === 'backward') {
-            console.log("Moving Forward");
-            // Zone 3 & 4 move toward center
-            if ([3, 4].includes(enemy.zone) && enemy.range < 3) enemy.range++;
-            // Zone 7 & 8 move further away or stay
-            else if ([7, 8].includes(enemy.zone) && enemy.range > 0) enemy.range--;
-        }
-        else if (type === 'turn-cw') {
-            console.log("Turning CW");
-            // Turn all enemies clockwise
-            enemy.zone = enemy.zone === 1 ? 8 : enemy.zone - 1;
-            
-        }
-        else if (type === 'turn-ccw') {
-            console.log("Turning CCW");
-            // Turn all enemies clockwise
-            enemy.zone = enemy.zone === 8 ? 1 : enemy.zone + 1;
-        }
-    });
-    // Action has a T-cost (example T2)
-    gameState.player.time = 2; 
-    render();
+
+        const text = await response.text();
+        const parser = new DOMParser();
+        const templateDoc = parser.parseFromString(text, 'text/html');
+
+        return [true, templateDoc];
+
+    }
+    catch (error) {
+        errDiv.innerHTML += `<br><strong>Error:</strong> Failed to load content <br>
+        Details: ${error.message}`;
+        return [false];
+    }
 }
+
+async function loadEnemiesJson() {
+    try{
+        const response = await fetch(enemiesJSON);
+
+        if (!response.ok) {
+            throw new Error(`HTTP Error! Status: ${response.status}`);
+        }
+
+        const enemyData = await response.json();
+
+        return [true, enemyData];
+    }
+    catch (error) {
+        errDiv.innerHTML += `<br><strong>Error:</strong> Failed to load content <br>
+        Details: ${error.message}`;
+        return [false];
+    }
+}
+
+function injectTimeTrack(templateDoc) {
+    // ----- Time Slots ----- //
+    timeDiv.innerHTML = '';
+    const timeSlot = templateDoc.querySelector('#time-slots').querySelector('.slot');
+    // timeDiv.innerHTML = timeSlot.outerHTML;
+    for(let ii = 0; ii <= 7; ii++) {
+        const clone = timeSlot.cloneNode(true);
+
+        if (ii === 0) {
+            clone.classList.add('active-slot');
+            clone.querySelector('.time-label').innerHTML = "<h3>A</h3>";
+        } else {
+            clone.querySelector('.time-label').innerHTML = `<h3>${ii}</h3>`;
+        }
+        timeDiv.appendChild(clone);
+    }
+}
+
+function spawnEnemy(templateDoc, enemiesDoc, index, pos){
+    try {
+        // errDiv.innerHTML += "In Spawn Enemy<br>"
+        const enemyData = enemiesDoc.enemyData[index]
+        enemyData.pos = pos;
+        gameState.enemies.push(enemyData);
+        addEnemyToInfo(templateDoc, gameState.enemies.at(-1), gameState.enemies.length);
+    }
+    catch (error) {
+        errDiv.innerHTML += `<br><strong>Error:</strong> Failed to load content <br>
+        Details: ${error.message}`;
+    }
+}
+
+function addEnemyToInfo(templateDoc, enemyData, id) {
+    // errDiv.innerHTML += "In Adding Enemy<br>"
+    const enemyDiv = templateDoc.querySelector("#enemy-data").querySelector('.enemy');
+
+    const enemyClone = enemyDiv.cloneNode(true)
+    enemyClone.dataset.id = id;
+
+    enemyClone.querySelector(".icon").innerHTML = enemyData.icon;
+    enemyClone.querySelector(".name").innerHTML = enemyData.name;
+    enemyClone.querySelector(".armor").innerHTML = enemyData.armor;
+    
+    const attackDiv = enemyClone.querySelector(".attack");
+    // const clone = attackDiv
+    enemyClone.querySelector(".attacks").innerHTML = '';
+
+    for (const a of enemyData.attacks)
+    {
+        const attackClone = attackDiv.cloneNode(true);
+
+        attackClone.querySelector(".attack-name").innerHTML = a.name;
+        attackClone.querySelector(".attribute").innerHTML = a.attribute;
+        attackClone.querySelector(".range").innerHTML = a.range;
+        attackClone.querySelector(".power").innerHTML = "P" + a.power;
+        attackClone.querySelector(".time").innerHTML = "T" + a.time;
+
+        enemyClone.querySelector(".attacks").appendChild(attackClone);
+    }
+
+    enemiesDiv.appendChild(enemyClone);
+}
+
+document.addEventListener("DOMContentLoaded", async function() {
+    errDiv.innerHTML = '';
+    let [radarLoaded, templateData, enemiesData] = await Promise.all([loadRadarGraphic(), loadTemplates(), loadEnemiesJson()]);
+
+    if (radarLoaded && templateData[0] && enemiesData[0])
+    {
+        const templateDoc = templateData[1];
+        const enemyDoc = enemiesData[1];
+
+        injectTimeTrack(templateDoc);
+        spawnEnemy(templateDoc, enemyDoc, 2, [1,2]); 
+        spawnEnemy(templateDoc, enemyDoc, 1, [1,2]);
+        
+        render();
+        
+    } else {
+        errDiv.innerHTML += "<br>Error Loading";
+    }
+})
 
 function render() {
-    const enemyContainer = document.getElementById('enemies');
-    enemyContainer.innerHTML = '';
-    
-    gameState.enemies.forEach(e => {
-        const token = document.createElement('div');
-        token.className = 'enemy-token';
-        token.style.backgroundColor = e.color;
-        
-        // Convert Radial (zone/range) to XY for CSS positioning
-        const angle = (-45 * (e.zone - 1) + 22.5) * (Math.PI / 180);
-        const dist = e.range * 12.5 + 6.25;
-        token.style.left = `${50 - Math.cos(angle) * dist}%`;
-        token.style.top = `${50 + Math.sin(angle) * dist}%`;
-        
-        enemyContainer.appendChild(token);
-    });
-}
+    enemiesRadar.innerHTML = '';
 
-function log(msg) {
-    const l = document.getElementById('log');
-    l.innerHTML = `<div>> ${msg}</div>` + l.innerHTML;
-}
+    errDiv.innerHTML += "Rendering<br>";
 
-render();
+    for (e of gameState.enemies)
+    {
+        errDiv.innerHTML += `${e.name}<br>`;
+        enemiesRadar.innerHTML += '<circle cx="100" cy="100" r="10" fill="var(--color-enemy)"/>';
+    }
+}

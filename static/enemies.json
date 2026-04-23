@@ -1,0 +1,85 @@
+{
+    "enemyData": [
+        {
+            "name": "SCOUT BIKE",
+            "icon": "B",
+            "armor": 2,
+            "pos": [-1, -1],
+            "attacks": [
+                {
+                    "name": "Machine Gun",
+                    "attribute": "",
+                    "range": "S",
+                    "power": 2,
+                    "time": 1,
+                    "pips": 2
+                }
+            ]
+        },
+
+        {
+            "name": "HELO",
+            "icon": "H",
+            "armor": 2,
+            "pos": [-1, -1],
+            "attacks": [
+                {
+                    "name": "MACHINE GUN",
+                    "attribute": "",
+                    "range": "S",
+                    "power": 2,
+                    "time": 2,
+                    "pips": 2
+                },
+                {
+                    "name": "MISSLES",
+                    "attribute": "RECOIL",
+                    "range": "M",
+                    "power": 4,
+                    "time": 4,
+                    "pips": 2
+                }
+            ]
+        },
+        {
+            "name": "FIRETHROWER",
+            "icon": "F",
+            "armor": 3,
+            "pos": [-1, -1],
+            "attacks": [
+                {
+                    "name": "LASER",
+                    "attribute": "ACCURATE",
+                    "range": "M",
+                    "power": 3,
+                    "time": 3,
+                    "pips": 2
+                },
+                {
+                    "name": "FLAME GUN",
+                    "attribute": "",
+                    "range": "S",
+                    "power": 3,
+                    "time": 3,
+                    "pips": 2
+                }
+            ]
+        },
+        {
+            "name": "ATTACK JET",
+            "icon": "J",
+            "armor": 4,
+            "pos": [-1, -1],
+            "attacks": [
+                {
+                    "name": "BOMBS",
+                    "attribute": "",
+                    "range": "C",
+                    "power": 6,
+                    "time": 1,
+                    "pips": 2
+                }
+            ]
+        }
+    ]
+}

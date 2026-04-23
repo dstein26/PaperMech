@@ -1,0 +1,95 @@
+<svg width="100%" height="100%" viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    
+    <style>
+        :root {
+            --svg-color-bkg: #213121;
+            --svg-color-green: #00ff00;
+            --svg-color-warn: #502c15;
+            --svg-color-danger: #520605;
+
+            --svg-color-player: #6ba9cc;
+        }
+    </style>
+
+    <defs>
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="5" edgeMode="none" result="alphaBlur" />
+            <feFlood flood-color="var(--svg-color-green)" flood-opacity="0.8" result="blurColor" />
+            <feComposite in="blurColor" in2="alphaBlur" operator="in" result="coloredGlow" />
+
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blurredReturn" />
+
+            <feMerge>
+                <feMergeNode in="coloredGlow" />
+                <feMergeNode in="blurredReturn" />
+            </feMerge>
+        </filter>
+    </defs>
+
+    
+    <circle 
+        cx="200" cy="200" r="198" 
+        stroke="var(--svg-color-green)" stroke-width="2" fill="var(--svg-color-bkg)" 
+        />
+    
+
+    <path 
+        d="M 2 200
+            A 198 198 0 0 0 398 200
+            M 200 200" 
+        stroke="var(--svg-color-green)" fill="var(--svg-color-warn)" stroke-width="2"
+        />
+
+    <path 
+        d="M 200 200
+            L 60 340
+            A 198 198 0 0 0 340 340
+            L 200 200" 
+        stroke="var(--svg-color-green)" fill="var(--svg-color-danger)" stroke-width="2"
+        />
+
+
+    <circle 
+        cx="50%" cy="50%" r="37.5%" 
+        stroke="var(--svg-color-green)" stroke-width="1" fill="none" 
+        />
+    <circle 
+        cx="50%" cy="50%" r="25%" 
+        stroke="var(--svg-color-green)" stroke-width="1" fill="none" 
+        />
+    <circle 
+        cx="50%" cy="50%" r="12.5%" 
+        stroke="var(--svg-color-green)" stroke-width="1" fill="none" 
+        />
+    <line 
+        x1="50%" y1="0" x2="50%" y2="100%" 
+        stroke="var(--svg-color-green)" stroke-width="2"
+        />
+    <line 
+        x1="0" y1="50%" x2="100%" y2="50%" 
+        stroke="var(--svg-color-green)" stroke-width="2"
+        />
+    <line 
+        x1="0" y1="0" x2="100%" y2="100%" 
+        stroke="var(--svg-color-green)" stroke-width="2"
+        />
+    <line 
+        x1="100%" y1="0" x2="0" y2="100%" 
+        stroke="var(--svg-color-green)" stroke-width="2"
+        />
+    <circle 
+        cx="50%" cy="50%" r="10" fill="var(--svg-color-player)" 
+        filter="url(#glow)"
+        /> <!-- Player -->
+    <rect 
+        x="0" y="0" width="100%" height="100%" 
+        fill="none" stroke="var(--svg-color-green)" stroke-width="2"
+        />
+
+    <g id="enemies">
+        <circle 
+            cx="50%" cy="25%" r="10" 
+            stroke="var(--svg-color-green)" stroke-width="1" fill="red" 
+            />
+    </g>
+</svg>
