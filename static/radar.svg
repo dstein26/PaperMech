@@ -2,7 +2,7 @@
     
     <style>
         :root {
-            --svg-color-bkg: #213121;
+            --svg-color-bkg: #0b260b;
             --svg-color-green: #00ff00;
             --svg-color-warn: #502c15;
             --svg-color-danger: #520605;

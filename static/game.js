@@ -178,6 +178,6 @@ function render() {
     for (e of gameState.enemies)
     {
         errDiv.innerHTML += `${e.name}<br>`;
-        enemiesRadar.innerHTML += '<circle cx="100" cy="100" r="10" fill="var(--color-enemy)"/>';
+        enemiesRadar.innerHTML += '<circle cx="100" cy="100" r="10" fill="var(--color-enemy)" filter="url(#glow)"/>';
     }
 }

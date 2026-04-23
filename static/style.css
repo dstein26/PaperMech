@@ -65,9 +65,9 @@ button:hover {
 }
 
 #radar-svg-container {
-    width: calc(100% - 20px);
+    width: calc(100% - 50px);
     aspect-ratio: 1;
-    margin: 10px;
+    margin: 25px;
 }
 
 #radar svg {
@@ -177,7 +177,20 @@ button:hover {
 
 
 /*----- Controls Screen ------*/
+#controls-container {
+    display: grid;
+    grid-template-areas:
+        "action action  action"
+        "shl    stance  shr"
+        "shl    torso   shr"
+        ".      torso   ."
+        "arl    .       arr"
+        "arl    legs    arr"
+        ".      legs    .";
 
+    max-width: 400px;
+    gap: 2px;
+}
 
 /*----- Templates -----*/
 #templates {

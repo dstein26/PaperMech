@@ -32,9 +32,39 @@
 
             </div>
             <div id="controls">
-                <h2>Controls</h2>
-                <p>Use the time track to plan your moves.</p>
-                <p>Click on the radar to move or attack.</p>
+                <!-- <h2>Controls</h2> -->
+				<div id="controls-container">
+					<div id="action" class="control-group" style="grid-area: action;">
+						<h3>Action</h3>
+						<button onclick="advanceTime()">End Action / Tick</button>
+					</div>
+					<div id="stance" class="control-group" style="grid-area: stance;">
+						<h3>Stance</h3>
+					</div>
+					<div id="shoulder-right" class="control-group" style="grid-area: shr;">
+						<h3>Shoulder Right</h3>
+					</div>
+					<div id="shoulder-left" class="control-group" style="grid-area: shl;">
+						<h3>Shoulder Left</h3>
+					</div>
+					<div id="arm-right" class="control-group" style="grid-area: arr;">
+						<h3>Arm Right</h3>
+					</div>
+					<div id="arm-left" class="control-group" style="grid-area: arl;">
+						<h3>Arm Left</h3>
+					</div>
+					<div id="torso" class="control-group" style="grid-area: torso;">
+						<h3>Torso</h3>
+					</div>
+					<div id="legs" class="control-group" style="grid-area: legs;">
+						<h3>Legs</h3>
+						<button onclick="movePlayer('forward')">Walk Forward</button>
+						<button onclick="movePlayer('backward')">Walk Backward</button>
+						<button onclick="movePlayer('turn-cw')">Turn CW</button>
+						<button onclick="movePlayer('turn-ccw')">Turn CCW</button>
+					</div>
+				</div>
+				
             </div>
 		</main>
 
