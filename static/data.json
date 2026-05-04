@@ -1,0 +1,143 @@
+{
+    "enemyData": [
+        {
+            "id": "B",
+            "name": "SCOUT BIKE",
+            "icon": "B",
+            "armor": 2,
+            "attacks": [
+                { "name": "Machine Gun", "range": "S", "power": 2, "time": 1, "attribute": "", "pips": 2 }
+            ]
+        },
+        {
+            "id": "H",
+            "name": "HELO",
+            "icon": "H",
+            "armor": 2,
+            "attacks": [
+                { "name": "Missiles", "range": "M", "power": 4, "time": 4, "attribute": "Recoil", "pips": 2 },
+                { "name": "Machine Gun", "range": "S", "power": 2, "time": 2, "attribute": "", "pips": 2 }
+            ]
+        },
+        {
+            "id": "F",
+            "name": "FIRETHROWER",
+            "icon": "F",
+            "armor": 3,
+            "attacks": [
+                { "name": "Laser (Accurate)", "range": "M", "power": 3, "time": 3, "attribute": "Accurate", "pips": 2 },
+                { "name": "Flame Gun", "range": "S", "power": 4, "time": 2, "attribute": "", "pips": 2}                
+            ]
+        },
+        {
+            "id": "J",
+            "name": "ATTACK JET",
+            "icon": "J",
+            "armor": 4,
+            "attacks": [
+                { "name": "Bombs", "range": "C", "power": 6, "time": 1, "attribute": "", "pips": 2 }
+            ]
+        },
+        {
+            "id": "R",
+            "name": "RANGER MECH",
+            "icon": "R",
+            "armor": 3,
+            "attacks": [
+                { "name": "Missiles", "range": "L", "power": 4, "time": 4, "attribute": "Recoil", "pips": 2 },
+                { "name": "Rifle", "range": "L", "power": 4, "time": 5, "attribute": "Recoil", "pips": 2 }
+            ]
+        },
+        {
+            "id": "T",
+            "name": "TANK",
+            "icon": "T",
+            "armor": 4,
+            "attacks": [
+                { "name": "PPC", "range": "L", "power": 4, "time": 4, "attribute": "", "pips": 2 },
+                { "name": "Laser", "range": "M", "power": 3, "time": 3, "attribute": "Accurate", "pips": 2 }
+            ]
+        },
+        {
+            "id": "M",
+            "name": "BOSS MECH",
+            "icon": "M",
+            "armor": 4,
+            "attacks": [
+                { "name": "Missiles", "range": "L", "power": 4, "time": 4, "attribute": "Recoil", "pips": 2},
+                { "name": "Laser", "range": "M", "power": 3, "time": 3, "attribute": "Accurate", "pips": 2 },
+                { "name": "Fist", "range": "C", "power": 5, "time": 2, "attribute": "", "pips": 2 }
+            ]
+        }
+    ],
+
+    "weaponData": {
+        "shoulder_left": {
+            "name": "Wing Shield",
+            "attribute": "Reflex",
+            "armor": 4,
+            "weight": 1,
+            "arc": [1, 2, 3, 4],
+            "range": "-",
+            "attacks": [
+                {"name": "Defend", "time": 1, "power": 0, "pips": 2},
+                {"name": "Defend", "time": 1, "power": 0, "pips": 2},
+                {"name": "Defend", "time": 1, "power": 0, "pips": 2}
+            ]
+        },
+        "shoulder_right": {
+            "name": "Missiles",
+            "attribute": "Recoil",
+            "armor": 3,
+            "weight": 3,
+            "arc": [3, 4, 5, 6],
+            "range": "L",
+            "attacks": [
+                {"name": "Single", "time": 2, "power": 2, "pips": 2},
+                {"name": "Multi", "time": 3, "power": 4, "pips": 2},
+                {"name": "Full Salvo", "time": 4, "power": 6, "pips": 2}
+            ]
+        },
+        "arm_left": {
+            "name": "Laser",
+            "attribute": "Accurate",
+            "armor": 3,
+            "weight": 3,
+            "arc": [8, 1, 2, 3, 4, 5],
+            "range": "M",
+            "attacks": [
+                {"name": "Quick Beam", "time": 2, "power": 2, "pips": 2},
+                {"name": "Laser Blast", "time": 3, "power": 3, "pips": 2},
+                {"name": "Full Charge", "time": 4, "power": 4, "pips": 2}
+            ]
+        },
+        "arm_right": {
+            "name": "Fist",
+            "attribute": "Combo",
+            "armor": 3,
+            "weight": 2,
+            "arc": [2, 3, 4, 5, 6, 7],
+            "range": "C",
+            "attacks": [
+                {"name": "Punch", "time": 2, "power": 3, "pips": 2},
+                {"name": "Uppercut", "time": 3, "power": 5, "pips": 2},
+                {"name": "Crush", "time": 3, "power": 1, "pips": 2}
+            ]
+        }
+    },
+    "body": {
+        "legs": {
+            "armor": 4,
+            "actions": [
+                {"name": "Turn & Squat", "time": 1, "pips": 1},
+                {"name": "Walk Backwards", "time": 1, "pips": 1},
+                {"name": "Walk Forwards <em>free</em>", "time": 1, "pips": 1},
+                {"name": "Turn or Change Stance <em>free</em>", "time": 1, "pips": 1}
+            ]            
+        },
+        "torso": {
+            "armor": 5,
+            "injuries": ["", "+T1", "+T2", "<strong>Destroyed</strong>"]
+        }
+    }
+}

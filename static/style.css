@@ -1,128 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Jura:wght@400;600;700&display=swap');
+
 :root {
-    --color: #0f0;
-    --color-dim: rgb(17, 77, 17);
-    --color_bkg: #0b0f0b;
-    --color_deep: #060806;
-    --color_radar: #0f0;
-    --color_error: #ff009d;
-    --color_player: #006eff;
-    --color_e1: #ff0000;
-    --color_e2: #ff5e00;
-    --color_e3: #ff006a;
-    --text-bright: #2e4e2e;
-    --text:#c8c8c8;
-    --text-dim:#5a7a5a;
+    --color-error: #ff009d;
+
+    --color-bkg: #0b1b0b;
+    --color-bkg-lite: #1a4a1a;
+    --color-console-green: #00ff00;
+
+    --blue:         #3ab5ff;
+    --amber:        #f5a623;
+    --red:          #f54d23;
+    
+    --color-enemy: #ff5900;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+*, ::after, ::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: 'Jura', 'VT323', "Lucida Console", "Courier New", monospace;
+    font-variant-caps: small-caps;
+    color: var(--color-console-green);
+}
 
 html, body {
     height: 100%;
-    background: var(--color_error);
+    background: var(--color-error);
 }
 
-#game-container { 
-    display: flex;
-    flex-direction: column;
-    gap: 20px; 
-    background: var(--color_bkg); 
-    color: var(--color_radar); 
-    font-family: monospace; 
+header {
+    background: var(--color-bkg-lite);
+    color: var(--color-console-green);
+    text-align: center;
     padding: 20px;
 }
-#main-container {
+
+main {
+    display: grid;
+    grid-template-columns: 2fr 3fr 2fr;
+    background: var(--color-bkg);
+}
+
+em {
+    color: var(--amber);
+}
+
+/*----- General -----*/
+button {
+    background: black;
+    border: 1px solid var(--color-bkg-lite);
+    box-shadow: inset 0px 0px 5px 0px var(--color-console-green);
+    font-size: large;
+}
+
+button:hover {
+    box-shadow: inset 0px 0px 5px 2px var(--color-console-green);
+    transform: translate(-1px, -1px);
+}
+
+.pip { 
+    width: 1rem; 
+    height: 1rem; 
+    border: 1px solid var(--color-console-green); 
+    border-radius: 50%;
+    display: inline-block; 
+    margin-right: 2px; 
+    /* background: inherit; */
+}
+
+.filled {
+    background: var(--color-console-green);
+}
+
+.pip:hover {
+    background: var(--color-bkg-lite);
+}
+
+.active-indicator {
+    aspect-ratio: 1;
+    border: 1px solid var(--color-console-green);
+}
+
+*:hover > .active-indicator {
+    background: var(--color-bkg-lite);
+}
+
+.active-indicator.active {
+    background: var(--color-console-green);
+}
+
+
+/*----- Game Screen -----*/
+#info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.armor {
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    background: var(--color-bkg);
+    border-radius: 50%;
+    padding: 2px;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.attribute {
+    color: var(--amber);
+    font-style: italic;
+}
+
+/*----- Radar Icon -----*/
+#radar {
+    text-align: center;
+    margin: 0 0 25px 0; 
+}
+
+#radar-svg-container {
+    width: calc(100% - 50px);
+    aspect-ratio: 1;
+    margin: 25px;
+}
+
+#radar svg {
     width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/*----- Time Track -----*/
+#time-track {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    width: 90%;
+}
+
+#time-slots {
     display: flex;
     flex-direction: row;
-}
-#radar-container { 
-    position: relative; 
-    width: 400px; 
-    height: 400px; 
-    /* border: 2px solid var(--color); */
-    padding: 10px;
-}
-
-#radar-container > svg {
-    height: 100%;
     width: 100%;
-}
-
-#radar-container > svg > .player {
-    fill: var(--color_player);
-}
-
-#radar-container > svg > .radar-line {
-    stroke: var(--color_radar);
-    stroke-width: 0.2%;
-}
-
-#radar-container > svg > .main-circle {
-    stroke-width: 0.5%;
-}
-
-.enemy-token { 
-    position: absolute; 
-    width: 12px; 
-    height: 12px; 
-    border-radius: 50%; 
-    transform: translate(-50%, -50%); 
-}
-
-.e1 {
-    fill: var(--color_e1);
-}
-
-.e2 {
-    fill: var(--color_e2);
-}
-
-.e3 {
-    fill: var(--color_e3);
-}
-
-
-#enemy-data {
-    flex: 1;
-    /* border: 2px solid var(--color_error); */
-}
-
-#time-track {
-    margin: 10px;
-}
-
-#time-slots { 
-    display: flex; 
-    gap: 5px; 
-    margin-top: 10px; 
-}
-
-.time-slot { 
-    width: 40px; 
-    height: 80px; 
-    display: flex; 
-    flex-direction: column;
-}
-
-.slot-label {
-    display: flex;
-    align-items: center; 
-    justify-content: center;
-    border: 2px solid var(--color);
-    flex: 1;
+    align-items: center;
 }
 
 .slot {
-    border: 1px solid var(--color);
-    flex: 1;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    aspect-ratio: 1/2;
+    width: 12.5%;
 }
 
-.active-slot > .slot-label { 
-    background: #050; 
-    border-width: 2px; 
+.slot > * {
+    border: 1px solid var(--color-console-green);
 }
 
-#controls {
+.active-slot > .time-label {
+    background: var(--color-bkg-lite);
+}
+
+.time-label {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    /* width:100%;
+    height:100%; */
+}
+
+/*----- Enemy Info -----*/
+.enemy {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0 10px 0;
+}
+
+.enemy > .enemy-header {
+    display: grid;
+    background: var(--color-bkg-lite);
+    grid-template-columns: auto 1fr auto auto;
+}
+
+.enemy > .enemy-header > * {
+    text-align: center;
+    padding: 5px;
+}
+
+.delete-enemy {
+    background: transparent;
+    border: 1px solid var(--red);
+    color: var(--red);
+    box-shadow: inset 0px 0px 5px 0px var(--red);
+}
+
+.delete-enemy:hover {
+    background: var(--red);
+    color: white;
+    box-shadow: inset 0px 0px 5px 0px var(--red);
+}
+
+.enemy > .enemy-header .icon {
+    color: black;
+    padding: 2px;
+    height: 1.5rem;
+    width: 1.5rem;
+    /* aspect-ratio: 1; */
+    background: var(--color-enemy);
+    border-radius: 50%;
+    border: 1px solid var(--color-enemy);
+
+}
+
+/* .enemy > .enemy-header .armor {
+    border: 1px solid var(--color-console-green);
+    background: var(--color-bkg);
+    border-radius: 50%;
+    padding: 2px;
+} */
+
+.enemy > .controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2px;
+}
+
+.enemy .attack {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr auto auto auto auto;
+    gap: 5px;
+    padding: 5px 0px 5px 0px;
+    border: 1px solid var(--color-bkg-lite);
+    border-top-style: none;
+    border-right-style: none;
+}
+
+/* .enemy .attack > .attribute {
+    color: var(--amber);
+    font-style: italic;
+} */
+
+/* .enemy .attack > .active-indicator {
+    aspect-ratio: 1;
+    border: 1px solid var(--color-console-green);
+}
+
+.enemy .attack:hover > .active-indicator {
+    background: var(--color-bkg-lite);
+} */
+
+
+/*----- Controls Screen ------*/
+
+#wave-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 20px;
+}
+
+#controls-container {
     display: grid;
     grid-template-areas:
         "action action  action"
@@ -131,31 +269,165 @@ html, body {
         ".      torso   ."
         "arl    .       arr"
         "arl    legs    arr"
-        ".      legs    .";
+        ".      legs    ."
+        ".      move    .";
 
-    max-width: 400px;
-    gap: 2px;
+    width: 100%;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
-#controls > div {
+#action > button {
+    width: 100%;
+}
+
+.weapon-slot > .weapon-header{
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    background: var(--color-bkg-lite);
+}
+
+.weapon-slot .weapon-info {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap: 5px
+}
+
+.weapon-slot .attacks-container > .attack {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto;
+    gap: 5px;
+    border: 1px solid var(--color-bkg-lite);
+    border-top-style: none;
+    border-right-style: none;
+}
+
+/* .weapon-slot .attack > .active-indicator {
+    aspect-ratio: 1;
+    height: 1em;
+    border: 1px solid var(--color-console-green);
+}
+
+.weapon-slot .attack:hover > .active-indicator {
+    background: var(--color-bkg-lite);
+} */
+
+#stance {
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
+#legs > .body-slot {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 5px;
+}
+
+#torso > .body-slot {
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
+#movement {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--color);
-    min-height: 40px;
 }
 
-#controls button {
-    color: var(--text);
-    background: var(--bg_deep);
-    border: 1px solid var(--color);
-    font-size: 18px;
-    padding: 8px 20px;
-    text-align: center;
-    box-shadow: 0 0 12px var(--color) inset;
+.body-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    background: var(--color-bkg-lite);
 }
 
-#controls button:hover {
-    background: var(--color-dim);
-    box-shadow: 0 0 20px var(--color) inset,
-                0 0 12px var(--color);
+/* Dice Sidebar Styling */
+#dice-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-left: 1px solid var(--color-bkg-lite);
+    padding-left: 10px;
+}
+
+.dice-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.dice-controls input {
+    background: black;
+    border: 1px solid var(--color-bkg-lite);
+    color: var(--color-console-green);
+    width: 50px;
+    padding: 2px;
+}
+
+#dice-pool {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Dice Styling */
+.die {
+    width: 44px;
+    height: 44px;
+    border: 2px solid var(--color-console-green);
+    background: black;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    padding: 5px;
+    gap: 2px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* The Pips */
+.die-pip {
+    background-color: var(--color-console-green);
+    border-radius: 50%;
+    width: 6px;
+    height: 6px;
+    align-self: center;
+    justify-self: center;
+}
+
+/* Amber Glow for Successes */
+.die.success {
+    border-color: var(--amber);
+    /* Shadow effect for the glow */
+    box-shadow: 0 0 15px var(--amber), inset 0 0 10px var(--amber);
+}
+
+.die.success .die-pip {
+    background-color: var(--amber);
+    box-shadow: 0 0 5px var(--amber);
+}
+
+.die:hover {
+    background: var(--color-bkg-lite);
+}
+
+/*----- Templates -----*/
+#templates {
+    flex: 1;
+    background: var(--color-bkg);
+}
+
+#templates-info-side {
+    height: 100%;
+}
+
+
+
+
+/*----- Other -----*/
+#errors {
+    background: black;
+}
+
+.test-border {
+    border: 1px solid var(--color-error);
 }

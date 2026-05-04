@@ -1,109 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Paper 'Mech Digital</title>
-    <link rel="stylesheet" href="static/style.css">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Paper 'Mech</title>
+		<link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-    <div id="game-container">
-        <div id="main-container">
-            <div id="radar-container">
-                <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                    <circle class="main-circle radar-line" cx="50%" cy="50%" r="49%" stroke="green" stroke-width="2" fill="black" />
-                    <circle class="radar-line" cx="50%" cy="50%" r="37.5%" stroke="green" stroke-width="1" fill="none" />
-                    <circle class="radar-line" cx="50%" cy="50%" r="25%" stroke="green" stroke-width="1" fill="none" />
-                    <circle class="radar-line" cx="50%" cy="50%" r="12.5%" stroke="green" stroke-width="1" fill="none" />
-                    <line class="radar-line" x1="50%" y1="0" x2="50%" y2="100%" stroke="green" stroke-width="1"/>
-                    <line class="radar-line" x1="0" y1="50%" x2="100%" y2="50%" stroke="green" stroke-width="1"/>
-                    <line class="radar-line" x1="0" y1="0" x2="100%" y2="100%" stroke="green" stroke-width="1"/>
-                    <line class="radar-line" x1="100%" y1="0" x2="0" y2="100%" stroke="green" stroke-width="1"/>
-                    <circle class="player" cx="50%" cy="50%" r="10" fill="blue" /> <!-- Player -->
-                    <rect class="border" x="0" y="0" width="100%" height="100%" fill="none" stroke="green" stroke-width="2"/>
-                    <div id="enemies">
 
-                    </div>
-                </svg>
-            </div>
-            <div id="enemy-data">
-                <div class="enemy-ref" style="top: 50px; left: 150px;">E1</div>
-                <div class="enemy-ref" style="top: 300px; left: 250px;">E2</div>
-            </div>
-        </div>
-        <div id="ui-container">
-            <div id="time-track">
-                <h3>Time Track</h3>
-                <div id="time-slots">
-                    <div class="time-slot active-slot">
-                        <div class="slot-label">A</div>
-                        <div class="slot"></div>
-                    </div>
-                    <div class="time-slot">
-                        <div class="slot-label">1</div>
-                        <div class="slot"></div>
-                    </div>
-                    <div class="time-slot">
-                        <div class="slot-label">2</div>
-                        <div class="slot"></div>
-                    </div>
-                    <div class="time-slot">
-                        <div class="slot-label">3</div>
-                        <div class="slot"></div>
-                    </div>
-                    <div class="time-slot">
-                        <div class="slot-label">4</div>
-                        <div class="slot"></div>
-                    </div>
-                    <div class="time-slot">
-                        <div class="slot-label">5</div>
-                        <div class="slot"></div>
-                    </div>
-                    <div class="time-slot">
-                        <div class="slot-label">6</div>
-                        <div class="slot"></div>
-                    </div>
-                    <div class="time-slot">
-                        <div class="slot-label">7</div>
-                        <div class="slot"></div>
-                    </div>
-                </div>
-            </div>
+		<header>
+			<h1>Paper 'Mech</h1>
+		</header>
 
+		<main>
+            <div id="info">
+				<div id="radar">
+					<h2>Radar</h2>
+					<div id="radar-svg-container"></div>
+				</div>
+
+				<div id="time-track">
+					<h3>Time Track</h3>
+					<div id="time-slots">
+					</div>						
+				</div>
+
+            </div>
             <div id="controls">
-                <div id="action" class="control-group" style="grid-area: action;">
-                    <h3>Action</h3>
-                    <button onclick="advanceTime()">End Action / Tick</button>
-                </div>
-                <div id="stance" class="control-group" style="grid-area: stance;">
-                    <h3>Stance</h3>
-                </div>
-                <div id="shoulder-right" class="control-group" style="grid-area: shr;">
-                    <h3>Shoulder Right</h3>
-                </div>
-                <div id="shoulder-left" class="control-group" style="grid-area: shl;">
-                    <h3>Shoulder Left</h3>
-                </div>
-                <div id="arm-right" class="control-group" style="grid-area: arr;">
-                    <h3>Arm Right</h3>
-                </div>
-                <div id="arm-left" class="control-group" style="grid-area: arl;">
-                    <h3>Arm Left</h3>
-                </div>
-                <div id="torso" class="control-group" style="grid-area: torso;">
-                    <h3>Torso</h3>
-                </div>
-                <div id="legs" class="control-group" style="grid-area: legs;">
-                    <h3>Legs</h3>
-                    <button onclick="movePlayer('forward')">Walk Forward</button>
-                    <button onclick="movePlayer('backward')">Walk Backward</button>
-                    <button onclick="movePlayer('turn-cw')">Turn CW</button>
-                    <button onclick="movePlayer('turn-ccw')">Turn CCW</button>
-                </div>
+                <!-- <h2>Controls</h2> -->
+				<div id="wave-display">WAVE: <span id="wave-number">0</span></div>
+				<div id="controls-container">
+					<div id="action" style="grid-area: action;">
+						<!-- <h3>Action</h3> -->
+						<button onclick="advanceTime()">End Action / Tick</button>
+					</div>
+					<div id="stance" class="control-group" style="grid-area: stance;">
+						<h3>Stance</h3>
+						<h3 id="stance-indicator"></h3>
+					</div>
+					<div id="shoulder_right" class="mount-group" style="grid-area: shr;">
+						<h3>Shoulder Right</h3>
+						<div class="weapon-slot"></div>
+					</div>
+					<div id="shoulder_left" class="mount-group" style="grid-area: shl;">
+						<h3>Shoulder Left</h3>
+						<div class="weapon-slot"></div>
+					</div>
+					<div id="arm_right" class="mount-group" style="grid-area: arr;">
+						<h3>Arm Right</h3>
+						<div class="weapon-slot"></div>
+					</div>
+					<div id="arm_left" class="mount-group" style="grid-area: arl;">
+						<h3>Arm Left</h3>
+						<div class="weapon-slot"></div>
+					</div>
+					<div id="torso" class="control-group" style="grid-area: torso;">
+						<div class="body-header">
+							<h3>Torso</h3>
+							<div class="armor"></div>
+						</div>
+						<div class="body-slot"></div>
+					</div>
+					<div id="legs" class="control-group" style="grid-area: legs;">
+						<div class="body-header">
+							<h3>Legs</h3>
+							<div class="armor"></div>
+						</div>
+						<div class="body-slot"></div>
+					</div>
+					<div id="movement" style="grid-area: move;">
+						<button onclick="movePlayer('forward')">Walk Forward</button>
+						<button onclick="movePlayer('backward')">Walk Backward</button>
+						<button onclick="movePlayer('clws')">Turn CW</button>
+						<button onclick="movePlayer('cclws')">Turn CCW</button>
+						<button onclick="changeStance()">Change Stance</button>
+					</div>
+				</div>
+				
+				<div id="enemy-data">
+					<h3>Enemy Data</h3>
+					<div id="enemy-list"></div>
+				</div>
             </div>
 
-            <div id="log"></div>
-        </div>
-    </div>
-    <script src="static/game.js"></script>
+			<div id="dice-sidebar" class="control-group">
+				<h3>Dice Roller</h3>
+				<div class="dice-controls">
+					<label>Count: <input type="number" id="dice-count" value="1" min="1" max="12"></label>
+					<label>Armor: <input type="number" id="armor-threshold" value="3" min="1" max="6"></label>
+					<button onclick="rollDice()">Roll Pool</button>
+				</div>
+				<div id="dice-pool">
+					</div>
+			</div>
+		</main>
+
+		<div id="errors"></div>
+
+		<!----- Templates ------->
+
+		<template id="time-slot-template">
+			<div class="slot">
+				<div class="time-label">
+					<h3></h3>
+				</div>
+				<div class="time-slot"></div>
+			</div>
+		</template>
+
+		<template id="enemy-data-template">
+			<div class="enemy" data-id="1">
+				<div class="enemy-header">
+					<div><h3 class="icon"></h3></div>
+					<h3 class="name"></h3>
+					<button class="delete-enemy" onclick="removeEnemy(this)">X</button>
+					<div><h3 class="armor"></h3></div>
+				</div>
+				<div class="controls">
+					<button onclick="enemyMove(this, 'forward')">&#8677</button>
+					<button onclick="enemyMove(this, 'backward')">&#8612</button>
+					<button onclick="enemyMove(this, 'clws')">&#8635</button>
+					<button onclick="enemyMove(this, 'cclws')">&#8634</button>
+					<button style="grid-column: 1 / 3;" onclick="adjustEnemyTime(this, 1)">T+1</button>
+					<button style="grid-column: 3 / 5;" onclick="adjustEnemyTime(this, -1)">T-1</button>
+				</div>
+				<div class="attacks">
+				</div>
+			</div>
+		</template>
+
+		<template id="enemy-attack-template">
+			<div class="attack">
+				<div class="active-indicator"></div>
+				<div class="attack-name"></div>
+				<div class="attribute"></div>
+				<div class="range"></div>
+				<div class="power"></div>
+				<div class="time"></div>
+				<div class="pips">
+				</div>
+			</div>
+		</template>
+
+		<template id="torso-row-template">
+			<div class="effect"></div>
+			<div class="pips"></div>
+		</template>"
+
+		<template id="leg-row-template">
+			<div class="active-indicator"></div>
+			<div class="name"></div>
+			<div class="time"></div>
+			<div class="pips"></div>
+		</template>
+
+		<template id="weapon-slot-template">
+			<div class="weapon-header">
+				<div class="name">NAME</div>
+				<div class="attribute">ATTR</div>
+				<div class="armor">0</div>
+			</div>
+			<div class="weapon-info">
+				<div class="attacks-container"></div>
+				<div class="info-sidebar">
+					<div class="weight"></div>
+					<div class="arc"></div>
+					<div class="range"></div>
+				</div>
+			</div>
+		</template>
+
+		<template id="attack-row-template">
+			<div class="attack">
+				<div class="active-indicator"></div>
+				<div class="attack-name"></div>
+				<div class="power"></div>
+				<div class="time"></div>
+				<div class="pips">
+				</div>
+			</div>
+		</template>
+
+		<template id="pip-template">
+			<div class="pip">
+			</div>
+		</template>
+
+		<!-- <footer>
+			<p>&copy; Me</p>
+		</footer> -->
+
+		<script src="static/game.js"></script>
 </body>
 </html>
