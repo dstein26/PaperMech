@@ -46,8 +46,8 @@ async function loadRadarGraphic() {
         enemiesRadar = document.querySelector("#enemies");
     }
     catch (error) {
-        errDiv.innerHTML += `<br><strong>Error:</strong> Failed to load content <br>
-        Details: ${error.message}`;
+        pushMsg(`<strong>Error:</strong> Failed to load content <br>
+            Details: ${error.message}`);
         passed = false;
     }
 
@@ -70,8 +70,8 @@ async function loadTemplates() {
 
     }
     catch (error) {
-        errDiv.innerHTML += `<br><strong>Error:</strong> Failed to load content <br>
-        Details: ${error.message}`;
+        pushMsg(`<strong>Error:</strong> Failed to load content <br>
+            Details: ${error.message}`);
         return [false];
     }
 }
@@ -89,8 +89,8 @@ async function loadDataJSON() {
         return [true, gameData];
     }
     catch (error) {
-        errDiv.innerHTML += `<br><strong>Error:</strong> Failed to load content <br>
-        Details: ${error.message}`;
+        pushMsg(`<strong>Error:</strong> Failed to load content <br>
+            Details: ${error.message}`);
         return [false];
     }
 }
@@ -124,8 +124,8 @@ function injectTimeTrack() {
             timeDiv.appendChild(clone);
         }
     }catch (error) {
-        errDiv.innerHTML += `<br><strong>Error:</strong> Failed to load content <br>
-        Details: ${error.message}`;
+        pushMsg(`<strong>Error:</strong> Failed to load content <br>
+            Details: ${error.message}`);
         return [false];
     }
     
@@ -142,9 +142,9 @@ function spawnEnemy(index, pos){
         addEnemyToInfo(gameState.enemies.at(-1), gameState.enemies.length-1);
     }
     catch (error) {
-        errDiv.innerHTMLc += `<br><strong>Error:</strong> Failed to load content <br>
-        Details: ${error.message}<br>`;
-        errDiv.innerHTML += `${gameState.enemies[-1]}<br>`
+        pushMsg(`<strong>Error:</strong> Failed to load content <br>
+            Details: ${error.message}<br>
+            ${gameState.enemies[-1]}`);
     }
 }
 
@@ -187,7 +187,7 @@ function loadEnemies() {
 }
 
 function addEnemyToInfo(enemyData, id) {
-    // errDiv.innerHTML += `In Adding Enemy<br>${enemyData.name}<br>`
+    // pushMsg(`In Adding Enemy<br>${enemyData.name}`);
     const enemyTemplate = document.getElementById('enemy-data-template');
     const enemyFragment = enemyTemplate.content.cloneNode(true);
     const enemyCard = enemyFragment.querySelector('.enemy');
@@ -378,7 +378,7 @@ function controlClickEvent(event) {
 }
 
 document.addEventListener("DOMContentLoaded", async function() {
-    errDiv.innerHTML = '';
+    sendMsg('');
     let [radarLoaded, templateData, gameData] = await Promise.all([loadRadarGraphic(), loadTemplates(), loadDataJSON()]);
 
     document.getElementById('controls').addEventListener('click', (e) => controlClickEvent(e));
@@ -388,32 +388,24 @@ document.addEventListener("DOMContentLoaded", async function() {
         const templateDoc = templateData[1];
         gameDoc = gameData[1];
 
-        // errDiv.innerHTML += gameDoc;
-
         gameState.player.mounts = gameDoc.weaponData;
         gameState.player.bodyParts = gameDoc.body;
 
         injectTimeTrack();
         loadPlayer();
-        
-        // spawnEnemy(gameDoc, 2, [1,2]); 
-        // spawnEnemy(gameDoc, 1, [3,3]);
 
         render();
         
     } else {
-        errDiv.innerHTML += "<br>Error Loading";
+        pushMsg("Error Loading");
     }
 })
 
 function render() {
     enemiesRadar.innerHTML = '';
 
-    // errDiv.innerHTML += "Rendering<br>";
-
     for (let ii = 0; ii < gameState.enemies.length; ii++) // e of gameState.enemies)
     {
-        // errDiv.innerHTML += `${e.name}<br>`;
         const e = gameState.enemies[ii];
         const arc = e.pos[0];
         const rng = e.pos[1];
@@ -440,7 +432,6 @@ function enemyMove(target, direction){
     
     const enemy = target.parentElement.parentElement;
     const id = enemy.dataset.id;
-    // errDiv.innerHTML += `Moving enemy: ${target} ${id} ${direction}<br>`;
 
     enemyMoveID(id, direction);
 }
@@ -449,7 +440,6 @@ function adjustEnemyTime(target, delta){
     
     const enemy = target.parentElement.parentElement;
     const id = enemy.dataset.id;
-    // errDiv.innerHTML += `Moving enemy: ${target} ${id} ${direction}<br>`;
     gameState.enemies[id].time = Math.max(0, Math.min(gameState.enemies[id].time + delta))
     
     placeTokenOnTrack(gameState.enemies[id].time, gameState.enemies[id].icon, 'var(--color-enemy)');
@@ -640,4 +630,12 @@ function drawTokens(count) {
         }
     }
     return drawn;
+}
+
+function sendMsg(string) {
+    errDiv.innerHTML = string; 
+}
+
+function pushMsg(string) {
+    errDiv.innerHTML += `${string}\n`;
 }
